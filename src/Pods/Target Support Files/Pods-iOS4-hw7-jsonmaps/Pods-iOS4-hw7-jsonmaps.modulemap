@@ -1,0 +1,6 @@
+framework module Pods_iOS4_hw7_jsonmaps {
+  umbrella header "Pods-iOS4-hw7-jsonmaps-umbrella.h"
+
+  export *
+  module * { export * }
+}

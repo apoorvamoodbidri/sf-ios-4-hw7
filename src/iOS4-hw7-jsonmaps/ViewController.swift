@@ -9,16 +9,20 @@
 import UIKit
 import MapKit
 import CoreLocation
+import SwiftyJSON
 
 // @TODO 1-5 Add SwiftyJSON to project
 // @TODO 6 Edit info.plist
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
-    
+
     @IBOutlet weak var map: MKMapView!
     
     var pins:[Pin] = []
     // @TODO 7 Add endpoint
+    
+    let endpoint = "http://kathrynrotondo.com/ios4/pins.json"
+
     
     let latitude:CLLocationDegrees = 37.77
     let longitude:CLLocationDegrees = -122.45
@@ -30,6 +34,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         centerMapOnLocation(latitude, longitude: longitude)
         
         // @TODO 9: call loadData
+        let urlString = "\(endpoint)"
+        loadData(urlString)
+        
         
         // adds a sample pin
         let pin = Pin(title: "GA", latitude: 37.7908727, longitude: -122.4034906)
@@ -54,10 +61,53 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         map.setRegion(region, animated: true)
     }
     
+
+    
+
+    
     // @TODO 7 Create a loadData function
-    // @TODO 10 inside loadData, call parseData
+    
+        func loadData(urlString: String){
+            if let url = NSURL(string: urlString) {
+    
+                if let data = try? NSData(contentsOfURL: url, options: [])
+                {
+                    let json = JSON(data: data)
+                    
+                    if json["cod"].intValue == 200 {
+                        print("200 , ok ")
+                        
+                        // @TODO 10 inside loadData, call parseData
+                        parseData(json)
+
+
+                    }
+                }
+            }
+    }
+    
+            
+    
+ 
     
     // @TODO 8 Create a parseData function
+    func parseData(json:JSON) {
+        
+        for result in json["pin"].arrayValue // just to get the dictionary back
+        {
+            let title  = result["title"].stringValue
+            let latitude  = result["latitude"].double
+            let longitude = result["longitude"].double
+            let pin = Pin(title:title,latitude:latitude!,longitude:longitude!)
+            
+            pins.append(pin)
+            
+            
+        }
+    }
+
+    
+                    
     
     func addAnnotation(pin:Pin) {
         

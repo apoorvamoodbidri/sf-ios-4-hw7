@@ -1,4 +1,4 @@
-# Assignment 7: JSON (& Maps)
+# Assignment 7: JSON (& Maps) 
 
 Consume JSON data, parse it, and use it to display pins on the provided sample app. The assigned app contains an MKMapView and code to display pins from an array of pins. It also contains a series of todos for loading a JSON file to populate the pins array. Implementing these todos will give you familiarity with SwiftyJSON and will give you a starting point for consuming API data in your final project app.
 
